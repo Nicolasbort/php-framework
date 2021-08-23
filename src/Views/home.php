@@ -1,3 +1,9 @@
-<h1>home page</h1>
+<div class="container">
+    <h1>home page</h1>
 
-<h2>Logged user <?php echo $name ?></h2>
+    <?php
+        if ($user) {
+            echo "Olá {$user->getName()}";
+        }
+    ?>
+</div>
