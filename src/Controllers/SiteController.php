@@ -6,8 +6,10 @@ class SiteController extends BaseController
 {
     public function home()
     {
+        $session = $this->getSession();
+
         $params = [
-            'name' => 'Nicolas'
+            'user' => $session->getSession('user')
         ];
 
         return $this->render('home', $params);
@@ -16,5 +18,10 @@ class SiteController extends BaseController
     public function login()
     {
         return $this->render('login');
+    }
+
+    public function signup()
+    {
+        return $this->render('signup');
     }
 }

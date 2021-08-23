@@ -35,7 +35,7 @@ class AuthController extends BaseController
             return $this->getResponse()->redirect('/login');
         }
 
-        $_SESSION[$user->getId()] = $user;
+        Application::$app->session->setSession('user', $user);
 
         $this->setFlash('success', "Login realizado com sucesso!");
         return $this->getResponse()->redirect('/');
@@ -44,20 +44,20 @@ class AuthController extends BaseController
     public function signup()
     {
         $data = $this->getRequest()->getBody();
-
+        
         $email = $data['email'] ?? null;
         $password = $data['password'] ?? null;
 
         if (!$email || !$password) {
             $this->setFlash('error', "Email ou senha inválidos.");
-            $this->getResponse()->redirect('/users/login');
+            return $this->getResponse()->redirect('/signup');
         }
 
         $user = $this->database->findBy(new User(), 'email', $email);
 
         if ($user) {
             $this->setFlash('error', "Este email está em uso");
-            $this->getResponse()->redirect('/users/login');
+            return $this->getResponse()->redirect('/signup');
         }
 
         $user = (new User())
@@ -66,8 +66,9 @@ class AuthController extends BaseController
 
         $this->database->writeModel($user);
 
-        $_SESSION[$user->getId()] = $user;
+        Application::$app->session->setSession('user', $user);
 
-        return "Cadastro realizado com sucesso";
+        $this->setFlash('success', "Cadastro realizado com sucesso!");
+        return $this->getResponse()->redirect('/');
     }
 }
