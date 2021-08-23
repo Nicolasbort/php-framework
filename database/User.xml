@@ -2,8 +2,9 @@
 <Users>
   <User>
     <id>6123a1ba26e47</id>
+    <name>Nicolas Bortoluzzi</name>
     <email>nicolaspb25@gmail.com</email>
     <password>$2y$10$kmXf6i984VUzdr/s24lFme4A0.zkXe/6fg6jr9b85shMZoDVt7DRu</password>
     <role>patient</role>
   </User>
-<User><id>6123a2bd68742</id><email>bortoluzzinicolas@gmail.com</email><password>$2y$10$bgs/mlovaN.lhrM9sAEsoe4vovuJAfVpbX6z8kuHz.EqRRazpFMrC</password><role>patient</role></User></Users>
+<User><id>6123a2bd68742</id><name>Nicolas Bortoluzzi</name><email>bortoluzzinicolas@gmail.com</email><password>$2y$10$bgs/mlovaN.lhrM9sAEsoe4vovuJAfVpbX6z8kuHz.EqRRazpFMrC</password><role>patient</role></User><User><id>6123e85ff4116</id><name>Nicolas Pieper Bortoluzzi</name><email>nicolasbortoluzzi@visie.com.br</email><password>$2y$10$n.KYjN.pNxfWW8S9v7GkA.NM1I6NH7NS36BeloEkrsXFid.Ci/nJ.</password><role>patient</role></User><User><id>6123e8b44d3ff</id><name>tesste</name><email>bortoluzzinicolas@hotmail.com</email><password>$2y$10$W482HYtqnNN3/BwA9/H7oOmO48kcYQS7/iyHnw26XCQSO/tEwP7ky</password><role>patient</role></User><User><id>6123eac710cd3</id><name>Alan</name><email>aa.santos8147@gmail.com</email><password>$2y$10$ipQ/9Eprrq1tEfkSzUneDulBAeuZgZi4DpilT/hX5QeMc.AxueYN.</password><role>patient</role></User></Users>
