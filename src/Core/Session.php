@@ -28,6 +28,16 @@ class Session
         return $_SESSION[self::FLASH_KEY][$key] ?? null;
     }
 
+    public function setSession(string $key, $value)
+    {
+        $_SESSION[$key] = $value;
+    }
+
+    public function getSession(string $key)
+    {
+        return $_SESSION[$key] ?? null;
+    }
+
     public function __destruct()
     {
         $flashMessages = $_SESSION[self::FLASH_KEY] ?? [];
