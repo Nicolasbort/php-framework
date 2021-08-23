@@ -21,6 +21,7 @@ $app = new Application();
 $app->router->get('/', [SiteController::class, 'home']);
 
 $app->router->get('/login', [SiteController::class, 'login']);
+$app->router->get('/signup', [SiteController::class, 'signup']);
 $app->router->post('/users/login', [AuthController::class, 'login']);
 $app->router->post('/users/signup', [AuthController::class, 'signup']);
 
