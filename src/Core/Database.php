@@ -49,7 +49,7 @@ class Database
         }
 
         foreach ($models as $key => $model) {
-            $newModel = (clone $model);
+            $newModel = (clone $modelObject);
             
             foreach ($model->children() as $column) {
                 if (property_exists($modelObject, $column->getName())) {
@@ -57,7 +57,7 @@ class Database
                 }
             }
 
-            $models[$key] = $model;
+            $models[$key] = $newModel;
         }
 
         return $models;
