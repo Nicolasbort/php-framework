@@ -28,11 +28,4 @@
       <password>$2y$10$W482HYtqnNN3/BwA9/H7oOmO48kcYQS7/iyHnw26XCQSO/tEwP7ky</password>
       <role>patient</role>
    </User>
-   <User>
-      <id>6123eac710cd3</id>
-      <name>Alan</name>
-      <email>aa.santos8147@gmail.com</email>
-      <password>$2y$10$ipQ/9Eprrq1tEfkSzUneDulBAeuZgZi4DpilT/hX5QeMc.AxueYN.</password>
-      <role>patient</role>
-   </User>
 </Users>
