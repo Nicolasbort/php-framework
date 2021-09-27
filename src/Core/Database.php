@@ -70,7 +70,7 @@ class Database
      * @param string $key
      * @param string $value
      */
-    public function fineOneBy($model, $key, $value)
+    public function findOneBy($model, $key, $value)
     {
         $modelFound = null;
         $modelName = get_class($model);
@@ -112,6 +112,9 @@ class Database
     {
         $modelName = get_class($model);
         $modelsXml = $this->loadModelFile($model);
+        if (false === $modelsXml) {
+            throw new \Exception('invalid XML');
+        }
         $modelXml = $modelsXml->addChild($modelName);
 
         foreach (get_object_vars($model) as $property => $value) {

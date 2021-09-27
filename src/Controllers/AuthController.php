@@ -28,7 +28,7 @@ class AuthController extends BaseController
             return $this->getResponse()->redirect('/login');
         }
 
-        $user = $this->database->findBy(new User(), 'email', $email);
+        $user = $this->database->findOneBy(new User(), 'email', $email);
 
         if (!$user || !$user->verifyPassword($password)) {
             $this->setFlash('error', "Email ou senha inválidos.");
@@ -38,6 +38,14 @@ class AuthController extends BaseController
         Application::$app->session->setSession('user', $user);
 
         $this->setFlash('success', "Login realizado com sucesso!");
+        return $this->getResponse()->redirect('/' . $user->role);
+    }
+
+    public function logoff()
+    {
+				Application::$app->session->setSession('user', null);
+        $this->setFlash('error', "Adeus! Volte sempre!");
+        var_dump('aaaaaaa');
         return $this->getResponse()->redirect('/');
     }
 
@@ -69,6 +77,6 @@ class AuthController extends BaseController
         Application::$app->session->setSession('user', $user);
 
         $this->setFlash('success', "Cadastro realizado com sucesso!");
-        return $this->getResponse()->redirect('/');
+        return $this->getResponse()->redirect('/' . $user->role);
     }
 }

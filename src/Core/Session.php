@@ -17,10 +17,9 @@ class Session
     }
     public function setFlash(string $key, string $message, string $color = 'primary'): void
     {
-      echo $color;
       $_SESSION[self::FLASH_KEY][$key] = [
           'value' => $message,
-          'color' => $color ? $color : 'primary',
+          'color' => $color,
           'remove' => false
       ];
     }

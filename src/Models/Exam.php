@@ -46,6 +46,11 @@ class Exam extends Model
         return $this;
     }
 
+    public function getDate(): string
+    {
+      return $this->date;
+    }
+
     public function getLaboratoryId(): string
     {
         return $this->laboratoryId;

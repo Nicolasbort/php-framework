@@ -19,6 +19,7 @@ class Router
      * @var Response $response
      */
     protected $response;
+    
 
     public function __construct(Request $request, Response $response)
     {
@@ -26,14 +27,19 @@ class Router
         $this->response = $response;
     }
 
-    public function get(string $path, $callback)
+
+    public function get(string $path, $callback): self
     {
         $this->routes['get'][$path] = $callback;
+
+				return $this;
     }
 
-    public function post(string $path, $callback)
+    public function post(string $path, $callback): self
     {
         $this->routes['post'][$path] = $callback;
+
+				return $this;
     }
 
     public function resolve()
@@ -60,14 +66,17 @@ class Router
 
     public function renderView($viewName, $params = [])
     {
-        $layoutContent = $this->layoutContent();
+        $layoutContent = $this->layoutContent($viewName, $params);
         $viewContent = $this->renderOnlyView($viewName, $params);
 
         return str_replace('{{content}}', $viewContent, $layoutContent);
     }
 
-    private function layoutContent()
+    private function layoutContent($viewName, $params)
     {
+        foreach ($params as $key => $value) {
+            $$key = $value;
+        }
         ob_start();
         include_once "src/Views/layouts/main.php";
         return ob_get_clean();

@@ -17,9 +17,9 @@ class BaseController
         return Application::$app->response;
     }
 
-    public function setFlash($key, $message)
+    public function setFlash($key, $message, $color = 'primary')
     {
-        Application::$app->session->setFlash($key, $message);
+        Application::$app->session->setFlash($key, $message, $color);
     }
 
     public function getSession()

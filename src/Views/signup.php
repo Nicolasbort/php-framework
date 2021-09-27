@@ -6,9 +6,9 @@
 ?>
 
 <div class="container my-5">
-    <h1 class="text-center">Cadastro</h1>
+    <h1 class="text-center">Criar uma conta</h1>
 
-    <form class="shadow rounded p-4 bg-light w-50 m-auto" action="/users/signup" method="post">
+    <form class="shadow-sm card rounded p-4 bg-light w-50 m-auto" action="/users/signup" method="post">
         <div class="mb-3">
             <?php if (isset($error)): ?>
                 <div class="alert alert-danger text-center">
@@ -28,7 +28,16 @@
             <label for="password" class="form-label">Senha</label>
             <input type="password" name="password" class="form-control">
         </div>
-        <button type="submit" class="btn btn-primary">Cadastrar</button>
+        <div class="mb-3">
+            <label for="role" class="form-label">Tipo de cadastro</label>
+            <select class="form-select" name="role">
+              <option value='patient'>Paciente</option>
+              <option value='doctor'>Médico</option>
+              <option value='laboratory'>Laboratório</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary mb-3">Cadastrar</button>
+        <a href="login" class="text-center">Já possuo uma conta</a>
     </form>
 </div>
     

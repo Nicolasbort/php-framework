@@ -18,17 +18,12 @@ class ExamController extends BaseController
 
     public function getExamsByUserId($userId): array
     {
-        $key = $user['role'] == 'patient' ? 'idPatient' : 'idLaboratory';
-        $exams = $this->database->findBy('exam', $key, $userId);
+        $key = $user['role'] == 'patient' ? 'patientId' : 'laboratoryId';
+        $exams = $this->database->findBy(new Exam(), $key, $userId);
         return $exams ? $exams : [];
     }
     
-    public function listExams()
-    {
-      
-    }
-    
-    public function createExam($date, $laboratoryId, $patientId, $examType, $result)
+    public function createExam()
     {
         $data = $this->getRequest()->getBody();
 
@@ -38,28 +33,28 @@ class ExamController extends BaseController
         $examType     = $data['examType'] ?? null;
         $result       = $data['result'] ?? null;
         if (!$date || !$laboratoryId || !$patientId || !$examType || !$result) {
-            $this->setFlash('error', "Estão faltando informações para criar o exame.");
-            return $this->getResponse()->redirect('/createExam');
+            $this->setFlash('error', "Estão faltando informações para criar o exame.".json_encode($data));
+            return $this->getResponse()->redirect('/laboratory');
         }
 
         $user = $this->database->findBy(new User(), 'id', $patientId);
         if (!$user) {
             $this->setFlash('error', "Paciente com id ".$patientId." não encontrado");
-            return $this->getResponse()->redirect('/createExam');
+            return $this->getResponse()->redirect('/laboratory');
         }
 
         $laboratory = $this->database->findBy(new User(), 'id', $laboratoryId);
         if (!$laboratory) {
             $this->setFlash('error', "Laboratório com id ".$laboratoryId." não encontrado");
-            return $this->getResponse()->redirect('/createExam');
+            return $this->getResponse()->redirect('/laboratory');
         }
 
         $exam = (new Exam())
-            ->loadDate($data);
+            ->loadData($data);
 
         $this->database->writeModel($exam);
 
         $this->setFlash('success', "Cadastro realizado com sucesso!");
-        return $this->getResponse()->redirect('/createExam');
+        return $this->getResponse()->redirect('/laboratory');
     }
 }
