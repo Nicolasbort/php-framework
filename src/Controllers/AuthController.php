@@ -28,7 +28,7 @@ class AuthController extends BaseController
             return $this->getResponse()->redirect('/login');
         }
 
-        $user = $this->database->findBy(new User(), 'email', $email);
+        $user = $this->database->fineOneBy(new User(), 'email', $email);
 
         if (!$user || !$user->verifyPassword($password)) {
             $this->setFlash('error', "Email ou senha inválidos.");
@@ -53,7 +53,7 @@ class AuthController extends BaseController
             return $this->getResponse()->redirect('/signup');
         }
 
-        $user = $this->database->findBy(new User(), 'email', $email);
+        $user = $this->database->fineOneBy(new User(), 'email', $email);
 
         if ($user) {
             $this->setFlash('error', "Este email está em uso");
