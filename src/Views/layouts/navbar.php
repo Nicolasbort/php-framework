@@ -30,7 +30,7 @@
       <li>
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="modal" data-bs-target="#debugModal">
-            <i class="fa fa-terminal">&nbsp;</i>Debug
+            Debug
           </a>
         </li>
       </li>
