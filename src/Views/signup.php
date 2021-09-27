@@ -1,7 +1,7 @@
 <div class="container my-5">
     <h1 class="text-center mb-5" data-aos="fade-up">Criar uma conta</h1>
 
-    <form class="shadow-sm card rounded p-4 bg-light w-50 m-auto" action="/users/signup" method="post" data-aos="fade-up" data-aos-delay="100">
+    <form class="shadow-sm card rounded p-4 bg-light w-md-50 m-auto" action="/users/signup" method="post" data-aos="fade-up" data-aos-delay="100">
         <div class="mb-3">
             <label for="name" class="form-label">Nome</label>
             <input type="text" name="name" class="form-control" required>

@@ -35,7 +35,7 @@
     
     <title>MedDocs</title>
   </head>
-  <body>
+  <body class="pb-5">
         
     <?php require_once "src/Core/Session.php"; ?>
 
