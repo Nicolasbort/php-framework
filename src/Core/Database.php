@@ -23,7 +23,58 @@ class Database
         return false;
     }
 
+<<<<<<< HEAD
     public function findBy($model, $key, $value)
+=======
+    /**
+     * Get all key-value pair matches 
+     * 
+     * @param Object $model
+     * @param string $key
+     * @param string $value
+     */
+    public function findBy($modelObject, $key, $value): array
+    {
+        $models = [];
+        $modelName = get_class($modelObject);
+        $modelFilename = $this->getModelFilename($modelObject);
+
+        $xml = simplexml_load_file($this->basePath . $modelFilename);
+
+        foreach ($xml->{$modelName} as $xmlModel) {
+            if ($xmlModel->{$key} == $value) {
+                $models[] = $xmlModel;
+            }
+        }
+
+        if (empty($models)) {
+            return [];
+        }
+
+        foreach ($models as $key => $model) {
+            $newModel = (clone $modelObject);
+            
+            foreach ($model->children() as $column) {
+                if (property_exists($modelObject, $column->getName())) {
+                    $newModel->{$column->getName()} = strval($column);
+                }
+            }
+
+            $models[$key] = $newModel;
+        }
+
+        return $models;
+    }
+
+    /**
+     * Get the first key-value pair match
+     * 
+     * @param Object $model
+     * @param string $key
+     * @param string $value
+     */
+    public function fineOneBy($model, $key, $value)
+>>>>>>> origin/master
     {
         $modelFound = null;
         $modelName = get_class($model);
