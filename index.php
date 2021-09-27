@@ -4,6 +4,7 @@ require_once('src/Core/Application.php');
 require_once('src/Controllers/AuthController.php');
 require_once('src/Controllers/SiteController.php');
 require_once('src/Controllers/ExamController.php');
+require_once('src/Controllers/ConsultController.php');
 
 $app = new Application();
 
@@ -29,8 +30,16 @@ $app->router->post('/users/login', [AuthController::class, 'login']);
 $app->router->post('/users/signup', [AuthController::class, 'signup']);
 $app->router->get('/users/logoff', [AuthController::class, 'logoff']);
 
+// Profile ( verifica apenas se está logado mas não verifica role )
+$app->router->get('/profile', [SiteController::class, 'profile']);
+$app->router->post('/profile/update', [AuthController::class, 'updateProfile']);
+
+// Paciente
 $app->router->get('/patient', [SiteController::class, 'patient']);
+
+// Médico
 $app->router->get('/doctor', [SiteController::class, 'doctor']);
+$app->router->post('/doctor/createConsult', [ConsultController::class, 'createConsult']);
 
 // Laboratório
 $app->router->get('/laboratory', [SiteController::class, 'laboratory']);

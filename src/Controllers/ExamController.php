@@ -18,7 +18,8 @@ class ExamController extends BaseController
 
     public function getExamsByUserId($userId): array
     {
-        $key = $user['role'] == 'patient' ? 'patientId' : 'laboratoryId';
+        $user = $this->database->findOneBy(new User(), 'id', $userId);
+        $key = $user->role == 'patient' ? 'patientId' : 'laboratoryId';
         $exams = $this->database->findBy(new Exam(), $key, $userId);
         return $exams ? $exams : [];
     }
@@ -46,11 +47,14 @@ class ExamController extends BaseController
         $data['patientName'] = $user->getName();
         $data['patientDocument'] = $user->getDocument();
 
-        $laboratory = $this->database->findBy(new User(), 'id', $laboratoryId);
+        $laboratory = $this->database->findOneBy(new User(), 'id', $laboratoryId);
         if (!$laboratory) {
             $this->setFlash('error', "Laboratório com id ".$laboratoryId." não encontrado");
             return $this->getResponse()->redirect('/laboratory');
         }
+
+        $data['laboratoryName']     = $laboratory->getName();
+        $data['laboratoryDocument'] = $laboratory->getDocument();
 
         $exam = (new Exam())
             ->loadData($data);

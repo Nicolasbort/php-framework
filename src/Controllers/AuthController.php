@@ -21,6 +21,38 @@ class AuthController extends BaseController
       return $this->database->findBy(new User(), 'role', $role);
     }
 
+    public function updateProfile()
+    {
+        $data = $this->getRequest()->getBody();
+        
+        $id = $data['id'] ?? null;
+        $email = $data['email'] ?? null;
+        $password = $data['password'] ?? null;
+
+        if (!$email || !$password || !$id) {
+            $this->setFlash('error', "Id de usuário e/ou senha inválida");
+            return $this->getResponse()->redirect('/profile');
+        }
+
+        $user = $this->database->findOneBy(new User(), 'id', $id);
+
+        if (!$user || !$user->verifyPassword($password)) {
+            $this->setFlash('error', "Senha inválida.");
+            return $this->getResponse()->redirect('/profile');
+        }
+
+        $user = (new User())
+            ->loadData($data)
+            ->encodePassword($password);
+
+        $this->database->writeModel($user);
+
+        Application::$app->session->setSession('user', $user);
+
+        $this->setFlash('success', "Alteração realizada com sucesso!");
+        return $this->getResponse()->redirect('/profile');
+    }
+
     public function login()
     {
         $data = $this->getRequest()->getBody();
@@ -66,7 +98,7 @@ class AuthController extends BaseController
             return $this->getResponse()->redirect('/signup');
         }
 
-        $user = $this->database->findBy(new User(), 'email', $email);
+        $user = $this->database->findOneBy(new User(), 'email', $email);
 
         if ($user) {
             $this->setFlash('error', "Este email está em uso");

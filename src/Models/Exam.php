@@ -19,6 +19,10 @@ class Exam extends Model
      */
     public $laboratoryId;
 
+    public $laboratoryName;
+
+    public $laboratoryDocument;
+
     /**
      * @var string $patientId
      */
@@ -72,6 +76,16 @@ class Exam extends Model
         $this->laboratoryId = $laboratoryId;
 
         return $this;
+    }
+
+    public function getLaboratoryName(): string
+    {
+        return $this->laboratoryName;
+    }
+
+    public function getLaboratoryDocument(): string
+    {
+        return $this->laboratoryDocument;
     }
 
     public function getPatientId(): string

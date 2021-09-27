@@ -2,6 +2,7 @@
 
 require_once "src/Controllers/BaseController.php";
 require_once "src/Controllers/ExamController.php";
+require_once "src/Controllers/ConsultController.php";
 require_once "src/Controllers/AuthController.php";
 
 
@@ -28,13 +29,30 @@ class SiteController extends BaseController
         return $this->render('signup');
     }
 
-		public function patient()
-		{
+    public function profile()
+    {
         $session = $this->getSession();
 
         $user = $session->getSession('user');
         $params = [
-          'user' => $user
+          'user' => $user,
+        ];
+			 return $this->render('profile', $params);
+    }
+
+		public function patient()
+		{
+        $session = $this->getSession();
+        $examController = new ExamController();
+        $consultController = new consultController();
+
+        $user = $session->getSession('user');
+        $exams = $examController->getExamsByUserId($user->getId());
+        $consults = $consultController->getConsultsByUserId($user->getId());
+        $params = [
+          'user' => $user,
+          'exams' => $exams,
+          'consults' => $consults,
         ];
 			 return $this->render('patient/index', $params);
 		}
@@ -42,10 +60,16 @@ class SiteController extends BaseController
 		public function doctor()
 		{
         $session = $this->getSession();
+        $consultController = new consultController();
+        $authController = new AuthController();
 
         $user = $session->getSession('user');
+        $patients = $authController->getAllByRole('patient');
+        $consults = $consultController->getConsultsByUserId($user->getId());
         $params = [
-          'user' => $user
+          'user' => $user,
+          'consults' => $consults,
+          'patients' => $patients
         ];
 			 return $this->render('doctor/index', $params);
 		}

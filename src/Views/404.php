@@ -1,1 +1,1 @@
-<h1>Ops! Algo deu errado!</h1>
+<h1 class="mt-5 text-center" data-aos="fade-up"><i class="fas fa-bug"></i><br>Ops! Algo deu errado!</h1>

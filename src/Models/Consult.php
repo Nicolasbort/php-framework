@@ -19,10 +19,18 @@ class Consult extends Model
      */
     public $doctorId;
 
+    public $doctorName;
+
+    public $doctorDocument;
+
     /**
      * @var string $patientId
      */
     public $patientId;
+
+    public $patientName;
+
+    public $patientDocument;
 
     /**
      * @var string $patientId
@@ -46,6 +54,18 @@ class Consult extends Model
         return $this;
     }
 
+    public function getDate(): string
+    {
+        return $this->date;
+    }
+
+    public function setDate(string $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
     public function getDoctorId(): string
     {
         return $this->doctorId;
@@ -58,33 +78,53 @@ class Consult extends Model
         return $this;
     }
 
+    public function getDoctorName(): string
+    {
+        return $this->doctorName;
+    }
+
+    public function getDoctorDocument(): string
+    {
+        return $this->doctorDocument;
+    }
+
     public function getPatientId(): string
     {
         return $this->patientId;
     }
 
-    public function setPatientId(string $patientId): self
+    public function setPatientId(string $patientId): string
     {
         $this->patientId = $patientId;
 
         return $this;
     }
 
-    public function getReceipt(): string
+    public function getPatientName(): string
     {
-        return $this->role;
+        return $this->patientName;
     }
 
-    public function setReceipt(string $receipt): self
+    public function getPatientDocument(): string
+    {
+        return $this->patientDocument;
+    }
+
+    public function getReceipt(): string
+    {
+        return $this->receipt;
+    }
+
+    public function setReceipt(string $receipt): string
     {
         $this->receipt = $receipt;
 
         return $this;
     }
 
-    public function getObservation(): self
+    public function getObservation(): string
     {
-        return $this->observation;
+        return $this->observation ? $this->observation : '';
     }
 
     public function setObservation($observation): string

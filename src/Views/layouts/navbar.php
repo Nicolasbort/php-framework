@@ -24,6 +24,9 @@
           <a class="nav-link <?= strpos($viewName, 'index') ? 'active' : ''?>" href="/<?= $user->role ?>">Home</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link <?=$viewName == 'profile' ? 'active' : ''?>" href="/profile">Perfil</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link <?=$viewName == 'logoff' ? 'active' : ''?>" href="/users/logoff">Logoff</a>
         </li>
       <?php endif; ?>

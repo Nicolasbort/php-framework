@@ -69,9 +69,11 @@ class Application
         if(in_array($prefix, $this->privateList)) {
           $user = $this->session->getSession('user');
 
-          if(!$user || $user && $user->role != $prefix) {
-            $this->session->setFlash('error', 'Você deve estar credenciado para acessar esta página', 'danger');
-            echo $this->router->renderView('/login');
+          if($prefix != 'profile'){
+            if(!$user || $user && $user->role != $prefix) {
+              $this->session->setFlash('error', 'Você deve estar credenciado para acessar esta página', 'danger');
+              echo $this->router->renderView('/login');
+            }
           }
         }
 
