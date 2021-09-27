@@ -3,19 +3,20 @@
     <h4 class="text-center">Registrar Exame</h4>
 
     <form class="shadow-sm card rounded p-4 bg-light m-auto" action="/laboratory/createExam" method="post">
+        <input type="hidden" name="laboratoryId" class="form-control" value="<?= $user->getId() ?>" required>
+
         <div class="mb-3">
           <label for="" class="form-label">Data</label>
           <input type="date" name="date" class="form-control" required>
         </div>
 
         <div class="mb-3">
-          <label for="" class="form-label">Cód. Laboratório</label>
-          <input type="text" name="laboratoryId" class="form-control" value="<?= $user->getId() ?>" readonly required>
-        </div>
-
-        <div class="mb-3">
-          <label for="" class="form-label">Cód. Paciente</label>
-          <input type="text" name="patientId" class="form-control" required>
+          <label for="" class="form-label">Paciente</label>
+          <select name="patientId" class="form-select" required>
+            <?php foreach($patients as $patient): ?>
+            <option value="<?=$patient->getId()?>"><?=$patient->getName();?></option>
+            <?php endforeach; ?>
+          </select>
         </div>
 
         <div class="mb-3">
@@ -48,7 +49,7 @@
       <tr>
         <th>#</th>
         <th>Data</th>
-        <th>Cód. Paciente</th>
+        <th>Paciente</th>
         <th>Tipo</th>
         <th>Resultado</th>
       </tr>
@@ -58,7 +59,7 @@
       <tr>
         <td><?= substr($exam->getId(), 0, 3).'...' ?></td>
         <td><?= $exam->getDate() ?></td>
-        <td><?= substr($exam->getPatientId(), 0, 3).'...' ?></td>
+        <td><?= $exam->getPatientName() ?></td>
         <td><?= $exam->getExamType() ?></td>
         <td><?= $exam->getResult() ?></td>
       </tr>
@@ -66,5 +67,4 @@
     </tbody>
   </table>
 </div>
-
     

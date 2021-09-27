@@ -24,6 +24,17 @@ class Exam extends Model
      */
     public $patientId;
 
+
+    /**
+     * @var string $patientDocument
+     */
+    public $patientDocument;
+
+    /**
+     * @var string $patientName
+     */
+    public $patientName;
+
     /**
      * @var string $patientId
      */
@@ -73,6 +84,16 @@ class Exam extends Model
         $this->patientId = $patientId;
 
         return $this;
+    }
+
+    public function getPatientDocument(): string
+    {
+        return $this->patientDocument;
+    }
+
+    public function getPatientName(): string
+    {
+        return $this->patientName;
     }
 
     public function getExamType(): string

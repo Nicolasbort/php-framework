@@ -37,11 +37,14 @@ class ExamController extends BaseController
             return $this->getResponse()->redirect('/laboratory');
         }
 
-        $user = $this->database->findBy(new User(), 'id', $patientId);
+        $user = $this->database->findOneBy(new User(), 'id', $patientId);
         if (!$user) {
             $this->setFlash('error', "Paciente com id ".$patientId." não encontrado");
             return $this->getResponse()->redirect('/laboratory');
         }
+
+        $data['patientName'] = $user->getName();
+        $data['patientDocument'] = $user->getDocument();
 
         $laboratory = $this->database->findBy(new User(), 'id', $laboratoryId);
         if (!$laboratory) {

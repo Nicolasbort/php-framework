@@ -1,10 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Users>
-  <User>
-    <id>6123a1ba26e47</id>
-    <name>Nicolas Bortoluzzi</name>
-    <email>nicolaspb25@gmail.com</email>
-    <password>$2y$10$kmXf6i984VUzdr/s24lFme4A0.zkXe/6fg6jr9b85shMZoDVt7DRu</password>
-    <role>patient</role>
-  </User>
-<User><id>6123a2bd68742</id><name>Nicolas Bortoluzzi</name><email>bortoluzzinicolas@gmail.com</email><password>$2y$10$bgs/mlovaN.lhrM9sAEsoe4vovuJAfVpbX6z8kuHz.EqRRazpFMrC</password><role>patient</role></User><User><id>6123e85ff4116</id><name>Nicolas Pieper Bortoluzzi</name><email>nicolasbortoluzzi@visie.com.br</email><password>$2y$10$n.KYjN.pNxfWW8S9v7GkA.NM1I6NH7NS36BeloEkrsXFid.Ci/nJ.</password><role>patient</role></User><User><id>6123e8b44d3ff</id><name>tesste</name><email>bortoluzzinicolas@hotmail.com</email><password>$2y$10$W482HYtqnNN3/BwA9/H7oOmO48kcYQS7/iyHnw26XCQSO/tEwP7ky</password><role>patient</role></User><User><id>6123eac710cd3</id><name>Alan</name><email>aa.santos8147@gmail.com</email><password>$2y$10$ipQ/9Eprrq1tEfkSzUneDulBAeuZgZi4DpilT/hX5QeMc.AxueYN.</password><role>patient</role></User><User><id>6151bd07c779b</id><name>a</name><email>a@email.com</email><password>$2y$10$y5iugPnHe11h.6MfG5G/sOEtx9kRzZWenmy06WVCR9wRH94e2fy/G</password><role>patient</role></User><User><id>6151be1497d37</id><name>b</name><email>b@email.com</email><password>$2y$10$mSNHWatdT2CS1e2TOcuKfej91QGEy4UAU500ALlEdQvsi2xSJS59m</password><role>doctor</role></User><User><id>6151c3381db5a</id><name>c</name><email>c@email.com</email><password>$2y$10$F/J.QVjRrN8ov2jfZ7HLZegstMSgBgV5lOODWVX.zkezDnF9XBslK</password><role>laboratory</role></User></Users>
+  <User><id>6151f61891884</id><name>a</name><document>111.111.111-11</document><email>a@email.com</email><password>$2y$10$iVSTGOM/l/mfzm.bQCDXM.ddn3GISmvezdPCSoHKf1hVNBZj6XuTy</password><role>patient</role></User><User><id>6151f6268e3e0</id><name>b</name><document>111.111.111-12</document><email>b@email.com</email><password>$2y$10$bS4WNcuTn1cNtCH8gMhsdewKYN5mmZ8Lg2iFJ0soeT6ZMEYt1H0kO</password><role>doctor</role></User><User><id>6151f630949ed</id><name>c</name><document>111.111.111-13</document><email>c@email.com</email><password>$2y$10$/2nUtGT5RVLZt8g7LXgxLuj9FU1CFRQyr.sj6NcG8qcxZu9KHHEvS</password><role>laboratory</role></User></Users>

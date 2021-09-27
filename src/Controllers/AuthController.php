@@ -16,6 +16,11 @@ class AuthController extends BaseController
         $this->database = new Database();    
     }
 
+    public function getAllByRole($role)
+    {
+      return $this->database->findBy(new User(), 'role', $role);
+    }
+
     public function login()
     {
         $data = $this->getRequest()->getBody();

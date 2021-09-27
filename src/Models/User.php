@@ -15,6 +15,11 @@ class User extends Model
     public $name;
 
     /**
+     * @var string $document
+     */
+    public $document;
+
+    /**
      * @var string $email
      */
     public $email;
@@ -49,6 +54,18 @@ class User extends Model
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getDocument(): string
+    {
+        return $this->document;
+    }
+
+    public function setDocument(string $document): self
+    {
+        $this->document = $document;
 
         return $this;
     }
