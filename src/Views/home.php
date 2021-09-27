@@ -25,11 +25,25 @@
       </div>
     </div>
 
-    <div class="row mb-5">
-      <div class="col-sm-12">
-        <a class="btn btn-primary w-100" href="signup" data-aos="fade-up" data-aos-delay="300">
-          Registre-se grátis agora!
-        </a>
+    <?php if(!$user): ?>
+      <div class="row mb-5">
+        <div class="col-sm-12">
+          <a class="btn btn-primary w-100" href="signup" data-aos="fade-up" data-aos-delay="300">
+            Registre-se grátis agora!
+          </a>
+        </div>
       </div>
-    </div>
+    <?php else: ?>
+      <div class="row mb-5">
+        <div class="col-sm-12 text-center" data-aos="fade-up" data-aos-delay="300">
+          <p>
+            Você está na conta de <i><?= $user->getName() ?></i>
+          </p>
+          <a class="btn btn-primary w-100 mb-3" href="/<?= $user->role ?>">
+            Clique aqui para acessar o sistema
+          </a>
+          <a href="/users/logoff">Entrar em outra conta</a>
+        </div>
+      </div>
+    <?php endif; ?>
 </div>

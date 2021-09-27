@@ -27,7 +27,9 @@
           <a class="nav-link <?=$viewName == 'profile' ? 'active' : ''?>" href="/profile">Perfil</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?=$viewName == 'logoff' ? 'active' : ''?>" href="/users/logoff">Logoff</a>
+          <a class="nav-link" data-bs-toggle="modal" data-bs-target="#logoffModal">
+            Logoff
+          </a>
         </li>
       <?php endif; ?>
       <li>
@@ -42,7 +44,7 @@
   </div>
 </nav>
 
-<!-- Modal -->
+<!-- Debug Modal -->
 <div class="modal fade" id="debugModal" tabindex="-1" aria-labelledby="debugModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -55,6 +57,31 @@
       </div>
       <div class="modal-body">
         <?php echo '<pre>' . var_export(get_defined_vars(), true) . '</pre>'; ?>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Logoff Modal -->
+<div class="modal fade" id="logoffModal" tabindex="-1" aria-labelledby="logoffModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="logoffModalLabel">
+          Logoff
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        Deseja sair do sistema?
+        <div class="container row mt-3">
+          <div class="col-6">
+            <a class="btn btn-secondary w-100" data-bs-dismiss="modal" aria-label="Close">Cancelar</a>
+          </div>
+          <div class="col-6">
+            <a class="btn btn-danger  w-100" href="/users/logoff">Sair</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>

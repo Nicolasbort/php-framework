@@ -14,12 +14,23 @@
     <script src="https://kit.fontawesome.com/d16b2c473e.js" crossorigin="anonymous"></script>
 
     <style>
-    body{
-      color: #777;
-    }
-    .nav-link {
-      cursor: pointer;
-    }
+
+      body::-webkit-scrollbar {
+        display: none;
+      }
+      
+      body {
+        color: #777;
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+        scroll-behavior: smooth;
+      }
+
+      .nav-link {
+        cursor: pointer;
+      }
+
+      
     </style>
     
     <title>MedDocs</title>

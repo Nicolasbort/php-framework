@@ -6,7 +6,7 @@
     </div>
   </div>
   <div class="row mb-3 pb-3">
-    <form action="/profile/update" method="POST">
+    <form action="/profile/update" method="POST" data-aos="fade-up" data-aos-delay="100">
         <div class="mb-3">
             <label for="id" class="form-label">Código</label>
             <input type="text" readonly name="id" class="form-control" value="<?=$user->getId()?>" required>
