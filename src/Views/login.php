@@ -9,13 +9,6 @@
 
     <form class="shadow rounded p-4 bg-light w-50 m-auto" action="/users/login" method="post">
         <div class="mb-3">
-            <?php if (isset($error)): ?>
-                <div class="alert alert-danger text-center">
-                    <?php echo $error['value']; ?>
-                </div>
-            <?php endif; ?>
-        </div>
-        <div class="mb-3">
             <label for="email" class="form-label">Email</label>
             <input type="email" name="email" class="form-control">
         </div>

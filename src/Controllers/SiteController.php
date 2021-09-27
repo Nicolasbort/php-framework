@@ -8,11 +8,20 @@ class SiteController extends BaseController
     {
         $session = $this->getSession();
 
-        $params = [
-            'user' => $session->getSession('user')
-        ];
+        $user = $session->getSession('user');
 
-        return $this->render('home', $params);
+        if($user) { 
+          $params = [
+            'user' => $user
+          ];
+          return $this->render('home', $params);
+        } else { 
+          $params = [
+            'user' => $user
+          ];
+          $this->setFlash('error', 'Você deve se credenciar para continuar','danger');
+          return $this->render('login', $params);
+        }
     }
 
     public function login()

@@ -15,12 +15,14 @@ class Session
 
         $_SESSION[self::FLASH_KEY] = $flashMessages;
     }
-    public function setFlash(string $key, string $message): void
+    public function setFlash(string $key, string $message, string $color = 'primary'): void
     {
-        $_SESSION[self::FLASH_KEY][$key] = [
-            'value' => $message,
-            'remove' => false
-        ];
+      echo $color;
+      $_SESSION[self::FLASH_KEY][$key] = [
+          'value' => $message,
+          'color' => $color ? $color : 'primary',
+          'remove' => false
+      ];
     }
 
     public function getFlash(string $key): ?array 

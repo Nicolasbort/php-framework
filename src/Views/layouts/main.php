@@ -11,7 +11,15 @@
   </head>
   <body>
         
-    <?php include_once "src/Views/layouts/navbar.php" ?>
+    <?php include_once "src/Views/layouts/navbar.php"; ?>
+
+    <?php 
+  
+      $error = Application::$app->session->getFlash('error'); 
+      if(isset($error)) {
+        include_once "src/Views/layouts/message.php";
+      }
+    ?>
 
     {{content}}
 

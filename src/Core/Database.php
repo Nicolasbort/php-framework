@@ -23,9 +23,6 @@ class Database
         return false;
     }
 
-<<<<<<< HEAD
-    public function findBy($model, $key, $value)
-=======
     /**
      * Get all key-value pair matches 
      * 
@@ -74,7 +71,6 @@ class Database
      * @param string $value
      */
     public function fineOneBy($model, $key, $value)
->>>>>>> origin/master
     {
         $modelFound = null;
         $modelName = get_class($model);
