@@ -10,3 +10,19 @@ document.querySelectorAll('input,textarea,select').forEach((input) => {
   if(type=='date') { input.valueAsDate = new Date(); }
   if(required && label) { label.innerHTML = label.innerHTML + '&nbsp;<b>*</b>'; }
 });
+
+function hideAlert(alert=null) {
+  alert = alert ? alert : document.querySelector('[role="alert"]');
+  alert.style.opacity = 0;
+  setTimeout(() => {
+    alert.classList.remove('d-flex');
+    alert.style.display = 'none';
+  }, 400);
+}
+
+// Apagando mensagem depois de um tempo
+document.querySelectorAll('[role="alert"]').forEach((alert) => {
+  setTimeout(() => {
+    hideAlert(alert);
+  }, 5000);
+})
