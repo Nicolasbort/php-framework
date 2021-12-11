@@ -21,7 +21,7 @@
         </li>
       <?php else: ?>
         <li class="nav-item">
-          <a class="nav-link <?= strpos($viewName, 'index') ? 'active' : ''?>" href="/<?= $user->role ?>">Home</a>
+          <a class="nav-link <?= strpos($viewName, 'index') ? 'active' : ''?>" href="/<?= $user->getRole() ?>">Home</a>
         </li>
         <li class="nav-item">
           <a class="nav-link <?=$viewName == 'profile' ? 'active' : ''?>" href="/profile">Perfil</a>

@@ -1,22 +1,30 @@
 <?php
-
-require_once('src/Core/Request.php');
-require_once('src/Core/Response.php');
+namespace MedDocs\Core;
 
 class Router
 {
     /**
-     * @var array $routes
+     * @var string
+     */
+    private $lastRoute = null;
+
+    /**
+     * @var array
      */
     protected $routes = [];
 
     /**
-     * @var Request $request
+     * @var array
+     */
+    protected $middlewares = [];
+
+    /**
+     * @var Request
      */
     protected $request;
     
     /**
-     * @var Response $response
+     * @var Response
      */
     protected $response;
     
@@ -27,30 +35,48 @@ class Router
         $this->response = $response;
     }
 
-
     public function get(string $path, $callback): self
     {
+        $this->lastRoute = $path;
+
         $this->routes['get'][$path] = $callback;
 
-				return $this;
+        return $this;
     }
 
     public function post(string $path, $callback): self
     {
+        $this->lastRoute = $path;
+
         $this->routes['post'][$path] = $callback;
 
-				return $this;
+        return $this;
+    }
+
+    public function middleware(AbstractMiddleware $middleware): self
+    {
+        $this->middlewares[$this->lastRoute] = $middleware;
+        
+        return $this;
     }
 
     public function resolve()
     {
         $path = $this->request->getPath();
         $method = $this->request->getMethod();
+        $middleware = $this->middlewares[$path] ?? null;
         $callback = $this->routes[$method][$path] ?? null;
 
         if (!$callback) {
             $this->response->setStatusCode(404);
             return $this->renderView('404');
+        }
+
+        $success = $middleware ? $middleware->handle() : true;
+
+        if (!$success) {
+            $this->response->setStatusCode(401);
+            return $this->renderView('/login');
         }
 
         if (is_string($callback)) {
@@ -77,8 +103,11 @@ class Router
         foreach ($params as $key => $value) {
             $$key = $value;
         }
+
         ob_start();
+
         include_once "src/Views/layouts/main.php";
+
         return ob_get_clean();
     }
 
@@ -89,7 +118,9 @@ class Router
         }
 
         ob_start();
+
         include_once "src/Views/$viewName.php";
+
         return ob_get_clean();
     }
 }

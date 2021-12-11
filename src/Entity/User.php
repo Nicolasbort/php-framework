@@ -1,45 +1,46 @@
 <?php
+namespace MedDocs\Entity;
 
-require_once "src/Core/Model.php";
+use MedDocs\Entity\AbstractEntity;
 
-class User extends Model
+class User extends AbstractEntity
 {
     /**
-     * @var string $id
+     * @var string
      */
-    public $id;
+    protected $id;
 
     /**
-     * @var string $name
+     * @var string
      */
-    public $name;
+    protected $name;
 
     /**
-     * @var string $document
+     * @var string
      */
-    public $document;
+    protected $email;
 
     /**
-     * @var string $email
+     * @var string
      */
-    public $email;
+    protected $document;
 
     /**
-     * @var string $password
+     * @var string
      */
-    public $password;
+    protected $password;
 
     /**
-     * @var string $role
+     * @var string
      */
-    public $role = 'patient';
+    protected $role = 'patient';
 
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    public function setId(string $id): self
+    public function setId(?string $id): self
     {
         $this->id = $id;
 
@@ -54,18 +55,6 @@ class User extends Model
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getDocument(): string
-    {
-        return $this->document;
-    }
-
-    public function setDocument(string $document): self
-    {
-        $this->document = $document;
 
         return $this;
     }
@@ -89,7 +78,7 @@ class User extends Model
 
     public function setPassword(string $password): self
     {
-        $this->password = $password;
+        $this->password = password_hash($password, PASSWORD_BCRYPT);
 
         return $this;
     }
@@ -106,9 +95,14 @@ class User extends Model
         return $this;
     }
 
-    public function encodePassword(): self
+    public function getDocument(): string
     {
-        $this->password = password_hash($this->password, PASSWORD_BCRYPT);
+        return $this->document;
+    }
+
+    public function setDocument(string $document)
+    {
+        $this->document = $document;
 
         return $this;
     }
@@ -117,4 +111,5 @@ class User extends Model
     {
         return password_verify($password, $this->password);
     }
+
 }

@@ -1,5 +1,5 @@
 <?php
-
+namespace MedDocs\Core;
 class Response
 {
     public function setStatusCode(int $code)

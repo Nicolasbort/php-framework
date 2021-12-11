@@ -13,8 +13,8 @@
       <div class="card col-12 shadow-sm rounded p-4 bg-light mb-3" data-aos="fade-up" data-aos-delay="100">
         <h5 class="text-dark">#<?=$exam->getId()?></h5>
         <p><i class="fa fa-calendar">&nbsp;</i> <?= $exam->getDate() ?></p>
-        <p><i class="fa fa-user">&nbsp;</i> <?= $exam->getPatientName() ?></p>
-        <p><i class="fa fa-file">&nbsp;</i> <?= $exam->getExamType() ?></p>
+        <p><i class="fa fa-user">&nbsp;</i> <?= $exam->getUserId() ?></p>
+        <p><i class="fa fa-file">&nbsp;</i> <?= $exam->getType() ?></p>
         <p><i class="fa fa-check">&nbsp;</i> <?= $exam->getResult() ?></p>
       </div>
     <?php endforeach ?>
@@ -24,8 +24,8 @@
     <?php foreach($consults as $consult): ?>
       <div class="card col-12 shadow-sm rounded p-4 bg-light mb-3" data-aos="fade-up">
         <h5 class="text-dark">#<?=$consult->getId()?></h5>
-        <p><i class="fa fa-calendar">&nbsp;</i> <?= $consult->getDate() ?></p>
-        <p><i class="fa fa-user">&nbsp;</i> <?= $consult->getPatientName() ?></p>
+        <p><i class="fa fa-calendar">&nbsp;</i> <?= $consult->getDate(true)->format('d/m/Y H:i') ?></p>
+        <p><i class="fa fa-user">&nbsp;</i> <?= $consult->getUserId() ?></p>
         <p><i class="fa fa-file">&nbsp;</i> <?= $consult->getReceipt() ?></p>
         <p><i class="fa fa-check">&nbsp;</i> <?= $consult->getObservation() ?></p>
       </div>

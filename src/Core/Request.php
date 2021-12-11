@@ -1,8 +1,8 @@
 <?php
-
+namespace MedDocs\Core;
 class Request
 {
-    public function getPath()
+    public function getPath(): string
     {
         $path = $_SERVER['REQUEST_URI'] ?? '/';
         $position = strpos($path, '?');
@@ -16,12 +16,12 @@ class Request
         return $path;
     }
 
-    public function getMethod()
+    public function getMethod(): string
     {
         return strtolower($_SERVER['REQUEST_METHOD']);
     }
 
-    public function getQuery()
+    public function getQuery(): array
     {
         $queryString = $_SERVER['QUERY_STRING'] ?? null;
         $queryArray = [];
@@ -35,7 +35,7 @@ class Request
         return $queryArray;
     }
 
-    public function getBody()
+    public function getBody(): array
     {
         $body = [];
 

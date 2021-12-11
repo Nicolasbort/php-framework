@@ -1,4 +1,5 @@
 <?php
+namespace MedDocs\Core;
 
 class Session
 {
@@ -7,6 +8,7 @@ class Session
     public function __construct()
     {
         session_start();
+
         $flashMessages = $_SESSION[self::FLASH_KEY] ?? [];
 
         foreach($flashMessages as $key => &$flashMessage) {

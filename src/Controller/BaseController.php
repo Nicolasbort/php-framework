@@ -1,5 +1,9 @@
 <?php
 
+namespace MedDocs\Controller;
+
+use MedDocs\Core\Application;
+
 class BaseController
 {
     public function render($view, $params = [])
@@ -25,5 +29,10 @@ class BaseController
     public function getSession()
     {
         return Application::$app->session;
+    }
+
+    public function setSession(string $key, $value)
+    {
+        Application::$app->session->setSession($key, $value);
     }
 }

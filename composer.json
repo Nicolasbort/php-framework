@@ -1,0 +1,22 @@
+{
+    "name": "meddocs/app",
+    "autoload": {
+        "psr-4": {
+            "MedDocs\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Nicolas Bortoluzzi",
+            "email": "bortoluzzinicolas@gmail.com"
+        },
+        {
+            "name": "Iago B. Almeida",
+            "email": "bortoluzzinicolas@gmail.com"
+        }
+    ],
+    "require": {}
+}

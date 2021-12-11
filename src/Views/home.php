@@ -39,7 +39,7 @@
           <p>
             Você está na conta de <i><?= $user->getName() ?></i>
           </p>
-          <a class="btn btn-primary w-100 mb-3" href="/<?= $user->role ?>">
+          <a class="btn btn-primary w-100 mb-3" href="/<?= $user->getRole() ?>">
             Clique aqui para acessar o sistema
           </a>
           <a href="/users/logoff">Entrar em outra conta</a>

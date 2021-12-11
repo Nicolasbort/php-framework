@@ -1,52 +1,32 @@
 <?php
 
-require_once('src/Core/Router.php');
-require_once('src/Core/Database.php');
-require_once('src/Core/Session.php');
-require_once('src/Core/Request.php');
-require_once('src/Core/Response.php');
-
+namespace MedDocs\Core;
 class Application
 {
     /**
-     * @var Router $router
+     * @var Router
      */
     public $router;
 
     /**
-     * @var Database $database
-     */
-    public $database;
-
-    /**
-     * @var Session $session
+     * @var Session
      */
     public $session;
 
     /**
-     * @var Request $request
+     * @var Request
      */
     public $request;
 
     /**
-     * @var Response $response
+     * @var Response
      */
     public $response;
 
     /**
-     * @var Application $app
+     * @var Application
      */
     public static $app;
-
-    /**
-     * @var Response $privateList
-     */
-    protected $privateList;
-
-		public function setPrivateList(array $privateList) 
-		{
-				$this->privateList = $privateList;
-		}
 
     public function __construct()
     {
@@ -56,27 +36,11 @@ class Application
         $this->response = new Response();
 
         $this->router = new Router($this->request, $this->response);
-        $this->database = new Database();
         $this->session = new Session();
     }
 
     public function run()
     {
-        $path = $this->request->getPath();
-
-				$prefix = explode('/', $path)[1];
-        
-        if(in_array($prefix, $this->privateList)) {
-          $user = $this->session->getSession('user');
-
-          if($prefix != 'profile'){
-            if(!$user || $user && $user->role != $prefix) {
-              $this->session->setFlash('error', 'Você deve estar credenciado para acessar esta página', 'danger');
-              echo $this->router->renderView('/login');
-            }
-          }
-        }
-
         echo $this->router->resolve();
     }
 }
