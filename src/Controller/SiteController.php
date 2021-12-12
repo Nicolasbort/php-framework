@@ -4,6 +4,8 @@ namespace MedDocs\Controller;
 use MedDocs\Repository\ConsultRepository;
 use MedDocs\Repository\ExamRepository;
 use MedDocs\Repository\UserRepository;
+use MedDocs\helpers;
+
 
 class SiteController extends BaseController
 {
@@ -39,6 +41,7 @@ class SiteController extends BaseController
         return $this->render('profile', $params);
     }
 
+
     public function patient()
     {
         $session = $this->getSession();
@@ -47,22 +50,28 @@ class SiteController extends BaseController
 
         $user = $session->getSession('user');
 
-        $exams = $exameRepository->findAll([
+        $exams = $exameRepository->findBy([
             'user_id' => $user->getId(),
         ]);
 
         $consults = $consultRepository->findBy([
             'user_id' => $user->getId(),
         ]);
+        
 
         $params = [
           'user' => $user,
           'exams' => $exams,
+          'exams_by_month' => array_reduce($exams ?? [], 'reduceByMonth', []),
+          'exams_by_year' => array_reduce($exams ?? [], 'reduceByYear', []),
           'consults' => $consults,
+          'consults_by_month' => array_reduce($consults ?? [], 'reduceByMonth', []),
+          'consults_by_year' => array_reduce($consults ?? [], 'reduceByYear', []),
         ];
 
         return $this->render('patient/index', $params);
     }
+    
 
     public function doctor()
     {
@@ -70,15 +79,19 @@ class SiteController extends BaseController
         $userRepository = new UserRepository();
         $consultRepository = new ConsultRepository();
 
-        $user = $session->getSession('user');
-        $patients = $userRepository->findAll();
+        $user = $_SESSION['user'];
+        $patients = $userRepository->findBy([
+            'role' => 'patient'
+        ]);
         $consults = $consultRepository->findBy([
-            'user_id' => $user->getId(),
+            'doctor_id' => $user->getId(),
         ]);
         
         $params = [
           'user' => $user,
           'consults' => $consults,
+          'consults_by_month' => array_reduce($consults, 'reduceByMonth', []),
+          'consults_by_year' => array_reduce($consults, 'reduceByYear', []),
           'patients' => $patients
         ];
 
@@ -93,14 +106,18 @@ class SiteController extends BaseController
 
         $user = $session->getSession('user');
 
-        $patients = $userRepository->findAll();
+        $patients = $userRepository->findBy([
+            'role' => 'patient'
+        ]);
         $exams = $examRepository->findBy([
-            'user_id' => $user->getId(),
+            'laboratory_id' => $user->getId(),
         ]);
 
         $params = [
           'user' => $user,
           'exams' => $exams,
+          'exams_by_month' => array_reduce($exams, 'reduceByMonth', []),
+          'exams_by_year' => array_reduce($exams, 'reduceByYear', []),
           'patients' => $patients
         ];
 

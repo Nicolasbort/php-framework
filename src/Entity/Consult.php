@@ -54,7 +54,7 @@ class Consult extends AbstractEntity
             return $this->date;
         }
 
-        return $this->date->format('Y-m-d H:i:s');
+        return $this->date;
     }
 
     public function setDate($date): self
@@ -82,7 +82,7 @@ class Consult extends AbstractEntity
         return $this;
     }
 
-    public function getUserId(): string
+    public function getUserId(): ?string
     {
         return $this->userId;
     }

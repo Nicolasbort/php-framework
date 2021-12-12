@@ -9,7 +9,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-      <?php if(!$user): ?>
+      <?php if(!isset($user)): ?>
         <li class="nav-item">
           <a class="nav-link <?=$viewName == 'home' ? 'active' : ''?>" aria-current="page" href="/">Home</a>
         </li>

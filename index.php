@@ -5,6 +5,8 @@ require_once 'vendor/autoload.php';
 use MedDocs\Controller\AuthController;
 use MedDocs\Controller\SiteController;
 use MedDocs\Controller\UserController;
+use MedDocs\Controller\ExamController;
+use MedDocs\Controller\ConsultController;
 use MedDocs\Core\Application;
 use MedDocs\Core\AuthMiddleware;
 
@@ -24,6 +26,8 @@ $authMiddleware = new AuthMiddleware();
 
 $app = new Application();
 
+$baseUrl=
+
 $app->router->get('/', [SiteController::class, 'home']);
 
 $app->router->get('/login', [SiteController::class, 'login']);
@@ -38,8 +42,10 @@ $app->router->post('/profile/update', [UserController::class, 'update']);
 $app->router->get('/patient', [SiteController::class, 'patient'])->middleware($authMiddleware);
 
 $app->router->get('/doctor', [SiteController::class, 'doctor']);
+$app->router->post('/doctor/createConsult', [ConsultController::class, 'create']);
 
 $app->router->get('/laboratory', [SiteController::class, 'laboratory']);
+$app->router->post('/laboratory/createExam', [ExamController::class, 'createExam']);
 
 $app->router->get('/api/exam', [ExamController::class, 'list']);
 $app->router->post('/api/exam', [ExamController::class, 'create']);

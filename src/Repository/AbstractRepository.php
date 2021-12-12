@@ -19,7 +19,7 @@ abstract class AbstractRepository
     
     public function __construct()
     {
-        $this->db = new PDO("sqlite:resources/database.sql", null, null, [
+        $this->db = new PDO("sqlite:resources/database.sqlite", null, null, [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
         ]);
     }
@@ -54,7 +54,7 @@ abstract class AbstractRepository
         foreach ($properties as $key => $property) {
             $getter = 'get' . ucfirst($property);
 
-            $stmt->bindParam($key+1, $entity->$getter());
+            $stmt->bindValue($key+1, $entity->$getter());
         }
 
         try {

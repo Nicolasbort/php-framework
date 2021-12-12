@@ -44,12 +44,12 @@ class ConsultController extends BaseController
 
         $date        = $data['date'] ?? null;
         $doctorId    = $data['doctorId'] ?? null;
-        $userId      = $data['userId'] ?? null;
+        $userId      = $data['patientId'] ?? null;
         $receipt     = $data['receipt'] ?? null;
         $observation = $data['observation'] ?? '';
 
         if (!$date || !$doctorId || !$userId || !$receipt) {
-            $this->setFlash('error', "Estão faltando informações para criar o exame. " . json_encode($data));
+            $this->setFlash('error', "Estão faltando informações para criar a consulta. " . json_encode($data));
             return $this->getResponse()->redirect('/doctor');
         }
 
@@ -70,7 +70,7 @@ class ConsultController extends BaseController
             ->setDoctorId($doctorId)
             ->setObservation($observation)
             ->setReceipt($receipt)
-            ->setDate(new \DateTime());
+            ->setDate(new \DateTime($date));
 
         $success = $this->consultRepository->create($consult);
 
