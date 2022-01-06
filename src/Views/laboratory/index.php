@@ -3,9 +3,9 @@
     <div class="col-12 mb-3">
       <h4 class="text-primary mb-0">Laboratório <?= $user->getName(); ?></h4>
       <small class="text-muted mb-3"><?= $user->getDocument(); ?></small>
-      <h5 class="mt-3">Métricas</h5>
       <div class="row">
         <div class="col-6">
+          <h6 class="mt-3">Consultas por mês</h6>
           <table class="table">
               <tr>
                 <th>Mês</th>
@@ -26,6 +26,7 @@
           </table>
         </div>
         <div class="col-6">
+          <h6 class="mt-3">Consultas por ano</h6>
           <table class="table">
               <tr>
                 <th>Ano</th>
@@ -57,7 +58,7 @@
       <?php foreach($exams as $exam): ?>
           <div class="col-6" data-aos="fade-up" data-aos-delay="100">
             <div class="card card-body shadow-sm rounded">
-              <h5 class="text-dark">#<?=$exam->getId()?> - Paciente #<?= $exam->getUserId() ?></h5>
+              <h5 class="text-dark">Paciente #<?= $exam->getUserId() ?> <small class="text-muted">#<?=$exam->getId()?></small></h5>
               <small><i class="fa fa-calendar">&nbsp;</i> <?= $exam->getDate() ?></small>
               <div class="mb-1 mt-3">
                 <h6 class="text-dark"><i class="fa fa-file text-dark">&nbsp;</i>Tipo</h6>

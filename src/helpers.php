@@ -10,8 +10,10 @@ function dd(...$args)
 }
 
 function reduceByMonth($carry, $item) {
+    $meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+    
     $d = new \DateTime($item->getDate());
-    $month = $d->format("m");
+    $month = $meses[$d->format("m")-1];
     if( isset($carry[$month]) ) {
         $carry[$month] += 1;
     }else{

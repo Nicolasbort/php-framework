@@ -9,16 +9,16 @@
     </h5>
 
     <div class="row align-items-stretch mb-md-5">
-      <div class="col-sm-12 d-flex justify-content-evenly align-items-stretch flex-column text-center text-primary">
-        <h3 class="mb-5" data-aos="fade-up" data-aos-delay="100">
+      <div class="row col-sm-12 text-center text-primary">
+        <h3 class="col-sm-12 col-md-4 mb-5" data-aos="fade-up" data-aos-delay="100">
           <i class="fas fa-diagnoses">&nbsp;</i>
           Exames
         </h3>
-        <h3 class="mb-5" data-aos="fade-up" data-aos-delay="150">
+        <h3 class="col-sm-12 col-md-4 mb-5" data-aos="fade-up" data-aos-delay="150">
           <i class="fa fa-file">&nbsp;</i>
           Consultas
         </h3>
-        <h3 class="mb-5" data-aos="fade-up" data-aos-delay="200">
+        <h3 class="col-sm-12 col-md-4 mb-5" data-aos="fade-up" data-aos-delay="200">
           <i class="fa fa-user">&nbsp;</i>
           Pacientes
         </h3>
