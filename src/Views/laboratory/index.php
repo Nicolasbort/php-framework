@@ -5,11 +5,11 @@
       <small class="text-muted mb-3"><?= $user->getDocument(); ?></small>
       <div class="row">
         <div class="col-6">
-          <h6 class="mt-3">Consultas por mês</h6>
+          <h6 class="mt-3">Exames por mês</h6>
           <table class="table">
               <tr>
                 <th>Mês</th>
-                <th>Consultas</th>
+                <th>Exames</th>
               </tr>
             <?php if($exams_by_month): ?>
               <?php foreach($exams_by_month as $month=>$count): ?>
@@ -26,11 +26,11 @@
           </table>
         </div>
         <div class="col-6">
-          <h6 class="mt-3">Consultas por ano</h6>
+          <h6 class="mt-3">Exames por ano</h6>
           <table class="table">
               <tr>
                 <th>Ano</th>
-                <th>Consultas</th>
+                <th>Exames</th>
               </tr>
             <?php if($exams_by_month): ?>
               <?php foreach($exams_by_year as $month=>$count): ?>
@@ -73,7 +73,7 @@
       <?php endforeach ?>
     <?php else: ?>
       <div class="col-12 d-flex justify-content-between align-items-center">
-        Nenhum exame encontrada
+        Nenhum exame encontrado
       </div>
     <?php endif; ?>
   </div>
