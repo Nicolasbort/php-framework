@@ -17,14 +17,14 @@ class Exam extends AbstractEntity
     protected $date;
 
     /**
-     * @var string
+     * @var User
      */
-    protected $laboratoryId;
+    protected $laboratory;
 
     /**
-     * @var string
+     * @var User
      */
-    protected $userId;
+    protected $user;
 
     /**
      * @var string
@@ -54,7 +54,7 @@ class Exam extends AbstractEntity
             return $this->date;
         }
 
-        return $this->date;
+        return $this->date->format('Y-m-d H:i:s');
     }
 
     public function setDate($date): self
@@ -65,31 +65,31 @@ class Exam extends AbstractEntity
             return $this;
         }
 
-        $this->date = date('Y-m-d H:i:s', $date->getTimestamp());
+        $this->date = $date;
 
         return $this;
     }
 
-    public function getLaboratoryId(): string
+    public function getLaboratory(): User
     {
-        return $this->laboratoryId;
+        return $this->laboratory;
     }
 
-    public function setLaboratoryId(string $laboratoryId): self
+    public function setLaboratory(User $laboratory): self
     {
-        $this->laboratoryId = $laboratoryId;
+        $this->laboratory = $laboratory;
 
         return $this;
     }
 
-    public function getUserId(): ?string
+    public function getUser(): User
     {
-        return $this->userId;
+        return $this->user;
     }
 
-    public function setUserId(string $userId): self
+    public function setUser(User $user): self
     {
-        $this->userId = $userId;
+        $this->user = $user;
 
         return $this;
     }

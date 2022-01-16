@@ -17,14 +17,14 @@ class Consult extends AbstractEntity
     public $date;
 
     /**
-     * @var string
+     * @var User
      */
-    public $doctorId;
+    public $doctor;
 
     /**
-     * @var string
+     * @var User
      */
-    public $userId;
+    public $user;
 
     /**
      * @var string
@@ -54,7 +54,7 @@ class Consult extends AbstractEntity
             return $this->date;
         }
 
-        return $this->date;
+        return $this->date->format('Y-m-d H:i:s');
     }
 
     public function setDate($date): self
@@ -65,31 +65,31 @@ class Consult extends AbstractEntity
             return $this;
         }
 
-        $this->date = date('Y-m-d H:i:s', $date->getTimestamp());
+        $this->date = $date;
 
         return $this;
     }
 
-    public function getDoctorId(): string
+    public function getDoctor(): User
     {
-        return $this->doctorId;
+        return $this->doctor;
     }
 
-    public function setDoctorId(string $doctorId): self
+    public function setDoctor(User $doctor): self
     {
-        $this->doctorId = $doctorId;
+        $this->doctor = $doctor;
 
         return $this;
     }
 
-    public function getUserId(): ?string
+    public function getUser(): User
     {
-        return $this->userId;
+        return $this->user;
     }
 
-    public function setUserId(string $userId): self
+    public function setUser(User $user): self
     {
-        $this->userId = $userId;
+        $this->user = $user;
 
         return $this;
     }

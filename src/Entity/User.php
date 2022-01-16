@@ -5,6 +5,10 @@ use MedDocs\Entity\AbstractEntity;
 
 class User extends AbstractEntity
 {
+    const ROLE_PATIENT = 'patient';
+    const ROLE_LABORATORY = 'laboratory';
+    const ROLE_DOCTOR = 'doctor';
+
     /**
      * @var string
      */
@@ -76,9 +80,15 @@ class User extends AbstractEntity
         return $this->password;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword(string $password, bool $hashPassword = false): self
     {
-        $this->password = password_hash($password, PASSWORD_BCRYPT);
+        if ($hashPassword) {
+            $this->password = password_hash($password, PASSWORD_BCRYPT);
+
+            return $this;
+        }
+
+        $this->password = $password;
 
         return $this;
     }

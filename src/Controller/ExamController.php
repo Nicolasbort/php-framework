@@ -4,6 +4,7 @@ namespace MedDocs\Controller;
 
 use MedDocs\Controller\BaseController;
 use MedDocs\Entity\Exam;
+use MedDocs\Entity\User;
 use MedDocs\Repository\ExamRepository;
 use MedDocs\Repository\LaboratoryRepository;
 use MedDocs\Repository\UserRepository;
@@ -15,11 +16,15 @@ class ExamController extends BaseController
      */
     private $examRepository;
 
+    /**
+     * @var UserRepository
+     */
+    private $userRepository;
+
     public function __construct()
     {
         $this->examRepository = new ExamRepository();
         $this->userRepository = new UserRepository();  
-        $this->laboratoryRepository = new LaboratoryRepository();  
     }
 
     public function list(): array
@@ -35,32 +40,40 @@ class ExamController extends BaseController
 
         $date         = $data['date'] ?? null;
         $laboratoryId = $data['laboratoryId'] ?? null;
-        $userId       = $data['patientId'] ?? null;
+        $patientId    = $data['patientId'] ?? null;
         $type         = $data['examType'] ?? null;
         $result       = $data['result'] ?? null;
 
-        if (!$date || !$laboratoryId || !$userId || !$type || !$result) {
+        if (!$date || !$laboratoryId || !$patientId || !$type || !$result) {
             $this->setFlash('error', "Estão faltando informações para criar o exame. " . json_encode($data));
             return $this->getResponse()->redirect('/laboratory');
         }
 
-        $user = $this->userRepository->find($userId);
-        if (!isset($user)) {
-            $this->setFlash('error', "Paciente com id '{$userId}' não encontrado");
+        $patient = $this->userRepository->findOneBy([
+            'id' => $patientId,
+            'role' => User::ROLE_PATIENT
+        ]);
+
+        if (!isset($patient)) {
+            $this->setFlash('error', "Paciente com id '{$patientId}' não encontrado");
             return $this->getResponse()->redirect('/doctor');
         }
 
-        $laboratory = $this->laboratoryRepository->find($laboratoryId);
+        $laboratory = $this->userRepository->findOneBy([
+            'id' => $laboratoryId,
+            'role' => User::ROLE_LABORATORY
+        ]);
+
         if (!isset($laboratory)) {
             $this->setFlash('error', "Laboratório com id '{$laboratoryId}' não encontrado");
             return $this->getResponse()->redirect('/doctor');
         }
 
         $exam = (new Exam)
-            ->setLaboratoryId($laboratoryId)
+            ->setLaboratory($laboratory)
             ->setResult($result)
             ->setType($type)
-            ->setUserId($userId)
+            ->setUser($patient)
             ->setDate(new \DateTime($date));
 
         $success = $this->examRepository->create($exam);

@@ -58,7 +58,7 @@
       <?php foreach($exams as $exam): ?>
           <div class="col-6" data-aos="fade-up" data-aos-delay="100">
             <div class="card card-body shadow-sm rounded">
-              <h5 class="text-dark">Paciente #<?= $exam->getUserId() ?> <small class="text-muted">#<?=$exam->getId()?></small></h5>
+              <h5 class="text-dark">Paciente <?= $exam->getUser()->getName() ?> <small class="text-muted">#<?=$exam->getId()?></small></h5>
               <small><i class="fa fa-calendar">&nbsp;</i> <?= $exam->getDate() ?></small>
               <div class="mb-1 mt-3">
                 <h6 class="text-dark"><i class="fa fa-file text-dark">&nbsp;</i>Tipo</h6>

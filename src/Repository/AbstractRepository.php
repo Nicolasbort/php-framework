@@ -34,6 +34,10 @@ abstract class AbstractRepository
         foreach ($properties as $key => $property) {
             $snakeCase = $this->toSnakeCase($property);
 
+            if ($snakeCase === 'user' || $snakeCase === 'doctor' || $snakeCase === 'laboratory') {
+                $snakeCase .= '_id';
+            }
+
             if ($key+1 === $propertiesCount) {
                 $fields .= $snakeCase;
                 $values .= "?";
@@ -53,6 +57,20 @@ abstract class AbstractRepository
 
         foreach ($properties as $key => $property) {
             $getter = 'get' . ucfirst($property);
+
+            $isEntity = false;
+            if ($property === 'user' || $property === 'doctor' || $property === 'laboratory') {
+                $isEntity = true;
+            }
+
+            if ($isEntity === true) {
+                echo '<pre>';
+                var_dump($getter, $property, $entity->$getter());
+                echo '</pre>';
+                $stmt->bindValue($key+1, $entity->$getter()->getId());
+
+                continue;
+            }
 
             $stmt->bindValue($key+1, $entity->$getter());
         }
@@ -132,7 +150,44 @@ abstract class AbstractRepository
             $statement = $this->db->prepare($sql);
             $statement->execute();
 
-            return $statement->fetchObject($this->getClassName());
+            $row = $statement->fetch(PDO::FETCH_ASSOC);
+
+            if ($row === false) {
+                return null;
+            }
+
+            $class = $this->getClassName();
+            $entity = new $class();
+
+            foreach ($row as $field => $value) {
+                if ($this->isEntity($field)) {
+                    $entityName = explode('_', $field)[0];
+    
+                    if ($entityName === 'user' || $entityName === 'laboratory' || $entityName === 'doctor') {
+                        $entityToSet = $entityName;
+                        $entityName = 'user';
+                    }
+    
+                    $entityPath = "MedDocs\\Entity\\" . ucfirst($entityName);
+    
+                    $relationSql = $this->createBaseSelect($entityName) . " WHERE id = {$value}";
+    
+                    $relationStatement = $this->db->prepare($relationSql);
+                    $relationStatement->execute();
+    
+                    $relationEntity = $relationStatement->fetchObject($entityPath);
+    
+                    $setter = 'set' . $this->toCamelCase($entityToSet ?? $entityName, true);
+                    $entity->$setter($relationEntity);
+    
+                    continue;
+                }
+
+                $setter = 'set' . $this->toCamelCase($field, true);
+                $entity->$setter($value);
+            }
+
+            return $entity;
         } catch (PDOException $e) {
             $this->pdoError = $e;
 
@@ -145,15 +200,58 @@ abstract class AbstractRepository
         $sql = $this->createBaseSelect();
         $sql .= " WHERE";
 
+        $andCount = count($filters) - 1;
         foreach ($filters as $column => $value) {
             $sql .= " {$column} = '{$value}'";
+
+            if ($andCount > 0) {
+                $sql .= ' AND';
+                $andCount--;
+            }
         }
 
         try {
             $statement = $this->db->prepare($sql);
             $statement->execute();
 
-            return $statement->fetchObject($this->getClassName());
+            $row = $statement->fetch(PDO::FETCH_ASSOC);
+
+            if ($row === false) {
+                return null;
+            }
+
+            $class = $this->getClassName();
+            $entity = new $class();
+
+            foreach ($row as $field => $value) {
+                if ($this->isEntity($field)) {
+                    $entityName = explode('_', $field)[0];
+    
+                    if ($entityName === 'user' || $entityName === 'laboratory' || $entityName === 'doctor') {
+                        $entityToSet = $entityName;
+                        $entityName = 'user';
+                    }
+    
+                    $entityPath = "MedDocs\\Entity\\" . ucfirst($entityName);
+    
+                    $relationSql = $this->createBaseSelect($entityName) . " WHERE id = {$value}";
+    
+                    $relationStatement = $this->db->prepare($relationSql);
+                    $relationStatement->execute();
+    
+                    $relationEntity = $relationStatement->fetchObject($entityPath);
+    
+                    $setter = 'set' . $this->toCamelCase($entityToSet ?? $entityName, true);
+                    $entity->$setter($relationEntity);
+    
+                    continue;
+                }
+
+                $setter = 'set' . $this->toCamelCase($field, true);
+                $entity->$setter($value);
+            }
+
+            return $entity;
         } catch (PDOException $e) {
             $this->pdoError = $e;
 
@@ -166,15 +264,59 @@ abstract class AbstractRepository
         $sql = $this->createBaseSelect();
         $sql .= " WHERE";
 
+        $andCount = count($filters) - 1;
         foreach ($filters as $column => $value) {
             $sql .= " {$column} = '{$value}'";
+
+            if ($andCount > 0) {
+                $sql .= ' AND';
+                $andCount--;
+            }
         }
 
         try {
             $statement = $this->db->prepare($sql);
             $statement->execute();
 
-            return $statement->fetchAll(PDO::FETCH_CLASS, $this->getClassName());
+            $entities = [];
+            
+            $rows = $statement->fetchAll(PDO::FETCH_CLASS);
+            foreach ($rows as &$row) {
+                $class = $this->getClassName(); 
+                $entity = new $class();
+
+                foreach ($row as $field => $value) {
+                    if ($this->isEntity($field)) {
+                        $entityName = explode('_', $field)[0];
+
+                        if ($entityName === 'user' || $entityName === 'laboratory' || $entityName === 'doctor') {
+                            $entityToSet = $entityName;
+                            $entityName = 'user';
+                        }
+
+                        $entityPath = "MedDocs\\Entity\\" . ucfirst($entityName);
+
+                        $relationSql = $this->createBaseSelect($entityName) . " WHERE id = {$value}";
+
+                        $relationStatement = $this->db->prepare($relationSql);
+                        $relationStatement->execute();
+
+                        $relationEntity = $relationStatement->fetchObject($entityPath);
+
+                        $setter = 'set' . $this->toCamelCase($entityToSet ?? $entityName, true);
+                        $entity->$setter($relationEntity);
+
+                        continue;
+                    }
+
+                    $setter = 'set' . $this->toCamelCase($field, true);
+                    $entity->$setter($value);
+                }
+
+                $entities[] = $entity;
+            }
+
+            return $entities;
         } catch (PDOException $e) {
             $this->pdoError = $e;
 
@@ -191,13 +333,37 @@ abstract class AbstractRepository
 
             $statement->execute();
 
-            $class = $this->getClassName(); 
-            $entity = new $class();
             $entities = [];
 
             $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
             foreach ($rows as &$row) {
+                $class = $this->getClassName(); 
+                $entity = new $class();
+
                 foreach ($row as $field => $value) {
+                    if ($this->isEntity($field)) {
+                        $entityName = explode('_', $field)[0];
+
+                        if ($entityName === 'user' || $entityName === 'laboratory' || $entityName === 'doctor') {
+                            $entityToSet = $entityName;
+                            $entityName = 'user';
+                        }
+
+                        $entityPath = "MedDocs\\Entity\\" . ucfirst($entityName);
+
+                        $relationSql = $this->createBaseSelect($entityName) . " WHERE id = {$value}";
+
+                        $relationStatement = $this->db->prepare($relationSql);
+                        $relationStatement->execute();
+
+                        $relationEntity = $relationStatement->fetchObject($entityPath);
+
+                        $setter = 'set' . $this->toCamelCase($entityToSet ?? $entityName, true);
+                        $entity->$setter($relationEntity);
+
+                        continue;
+                    }
+
                     $setter = 'set' . $this->toCamelCase($field, true);
                     $entity->$setter($value);
                 }
@@ -218,9 +384,11 @@ abstract class AbstractRepository
         return $this->pdoError;
     }
 
-    private function createBaseSelect(string $selectFields = '*'): string
+    private function createBaseSelect(string $customTable = null, string $selectFields = '*'): string
     {
-        return "SELECT {$selectFields} FROM {$this->getClassName(true, true)}";
+        $table = $customTable ?? $this->getClassName(true, true);
+
+        return "SELECT {$selectFields} FROM {$table}";
     }
 
     private function getClass(AbstractEntity $entity, bool $lowecase = true): string
@@ -235,7 +403,21 @@ abstract class AbstractRepository
         return $className;
     }
 
-    private function toCamelCase(string &$snakeCase, bool $capitalizeFirstCharacter = false): string
+    private function isEntity(string $field): bool
+    {
+        return preg_match('/_id/', $field);
+    }
+
+    private function getEntity(string $field): AbstractEntity
+    {
+        $entityName = explode('_', $field)[0];
+
+        $entityPath = "MedDocs\\Entity\\" . ucfirst($entityName);
+
+        return new $entityPath();
+    }
+
+    private function toCamelCase(string $snakeCase, bool $capitalizeFirstCharacter = false): string
     {
         $camelCase = str_replace(' ', '', ucwords(str_replace('_', ' ', $snakeCase)));
 

@@ -1,6 +1,7 @@
 <?php
 namespace MedDocs\Controller;
 
+use MedDocs\Entity\User;
 use MedDocs\Repository\ConsultRepository;
 use MedDocs\Repository\ExamRepository;
 use MedDocs\Repository\UserRepository;
@@ -81,12 +82,13 @@ class SiteController extends BaseController
 
         $user = $_SESSION['user'];
         $patients = $userRepository->findBy([
-            'role' => 'patient'
+            'role' => User::ROLE_PATIENT
         ]);
+
         $consults = $consultRepository->findBy([
             'doctor_id' => $user->getId(),
         ]);
-        
+
         $params = [
           'user' => $user,
           'consults' => $consults,
@@ -107,8 +109,9 @@ class SiteController extends BaseController
         $user = $session->getSession('user');
 
         $patients = $userRepository->findBy([
-            'role' => 'patient'
+            'role' => User::ROLE_PATIENT
         ]);
+
         $exams = $examRepository->findBy([
             'laboratory_id' => $user->getId(),
         ]);

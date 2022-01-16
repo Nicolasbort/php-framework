@@ -67,7 +67,7 @@ class AuthController extends BaseController
         $user = (new User)
             ->setEmail($email)
             ->setName($name)
-            ->setPassword($password)
+            ->setPassword($password, true)
             ->setDocument($document)
             ->setRole($role);
 
@@ -77,6 +77,8 @@ class AuthController extends BaseController
             $this->setFlash('error', $this->userRepository->getError()->getMessage());
             return $this->getResponse()->redirect('/signup');
         }
+
+        $user = $this->userRepository->findOneBy(['email' => $email]);
 
         $this->setSession('user', $user);
 
